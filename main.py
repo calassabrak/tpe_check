@@ -24,7 +24,7 @@ AC_list = list(range(current_AC - (weeks - 1), current_AC + 1))
 
 # Check local files for awarded TPE.
 def ClaimThread(x):
-    tpedir = r'C:\Users\GenworthOEM\PycharmProjects\TPEScout\claims'
+    tpedir = r'\claims'
     for user in x:
         for file in os.listdir(tpedir):
             tpe_check = pd.read_csv('claims/' + file, sep=',', names=['Username','TPE'])
@@ -35,7 +35,7 @@ def ClaimThread(x):
 
 # Check all defined weeks of Activity Check threads and award TPE.
 def ActivityChecks(x, AC_list):
-    ac_check = pd.read_csv(r'C:\Users\GenworthOEM\PycharmProjects\TPEScout\acthreads.txt', sep=',', names=['ACNum','ThreadID'])
+    ac_check = pd.read_csv(r'\acthreads.txt', sep=',', names=['ACNum','ThreadID'])
     for check in AC_list:
         search_URL = 'https://forums.sim-football.com/misc.php?action=whoposted&tid=' + str(ac_check[ac_check['ACNum'] == check].iloc[0,1])
         page = requests.get(search_URL)
@@ -50,7 +50,7 @@ def ActivityChecks(x, AC_list):
 
 # Check all potential locations for Weekly Training and award TPE.
 def WeeklyTraining(x, AC_list):
-    wt_threads = pd.read_csv(r'C:\Users\GenworthOEM\PycharmProjects\TPEScout\training_threads.txt', names=['ThreadID'])
+    wt_threads = pd.read_csv(r'\training_threads.txt', names=['ThreadID'])
     total_training = pd.DataFrame()
     for team in wt_threads['ThreadID']:
         search_URL = 'https://forums.sim-football.com/showthread.php?mode=threaded&tid=' + str(team)
@@ -144,4 +144,4 @@ ClaimThread(users)
 Wiki(users)
 Rookie(users)
 WeeklyTraining(users, AC_list)
-user_table.to_csv(r'C:\Users\GenworthOEM\PycharmProjects\TPEScout\output\output.csv', index = False)
+user_table.to_csv(r'\output\output.csv', index = False)
